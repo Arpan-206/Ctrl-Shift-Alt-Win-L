@@ -9,23 +9,6 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_KEY")
 
 
-def get_movie_details(imdb_id):
-    url = f"http://www.omdbapi.com/?i={imdb_id}&apikey={os.getenv('OMDB_API_KEY')}"
-    response = requests.get(url)
-    data = response.json()
-    
-    if data['Response'] == 'True':
-        return {
-            "title": data['Title'],
-            "genre": data['Genre'],
-            "plot": data['Plot'],
-            "year": int(data['Year']),
-        }
-    else:
-        print(f"Movie with IMDb ID {imdb_id} not found.")
-        return None
-
-
 def find_similar_movies(genre, plot, year):
     similar_movies = []
     year_range = range(year - 40, year + 40)
@@ -55,7 +38,7 @@ def recommend_movies(user_movies):
         
         if movie_details:
             similar_movies = find_similar_movies(movie_details['genre'], movie_details['plot'], movie_details['year'])
-            recommendations.append(similar_movies)
+            recommendations.extend(similar_movies)
     
     return recommendations
 
