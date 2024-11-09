@@ -17,7 +17,7 @@ def find_similar_movies_via_ai(genre, plot, year):
     )
     
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are a movie recommendation engine."},
             {"role": "user", "content": refined_prompt}
