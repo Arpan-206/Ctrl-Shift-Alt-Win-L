@@ -38,6 +38,14 @@ def update_movie(session: Session, movie_id: str, movie: Movie):
     session.refresh(movie)
     return movie
 
+def get_imdb_id_from_title(title: str):
+    url = f"http://www.omdbapi.com/?t={title}&apikey={os.getenv('OMDB_API_KEY')}"
+    response = requests.get(url)
+    data = response.json()
+    if data["Response"] == "True":
+        return data["imdbID"]
+    else:
+        return None
     
 def get_movie_details(imdb_id: str):
     url = f"http://www.omdbapi.com/?i={imdb_id}&apikey={os.getenv('OMDB_API_KEY')}"
@@ -45,11 +53,8 @@ def get_movie_details(imdb_id: str):
         response = requests.get(url)
 
         if response.status_code != 200:
-            print(f"Error: Received status code {response.status_code} from OMDb API.")
             return None
-
-        print(f"Response from OMDb API: {response.text}")  
-
+        
         data = response.json()
 
         if data["Response"] == "True":

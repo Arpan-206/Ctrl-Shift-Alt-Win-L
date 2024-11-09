@@ -41,20 +41,40 @@ async def suggest_movies(current_param: str):
 
 
 @app.post("/movies/", dependencies=[Depends(auth.implicit_scheme)])
-async def create_movie(
+async def cr_movie(
     movie: MovieCreate,
     user: Auth0User = Security(auth.get_user),
 ):
-    print(movie)
-    # check if atleast one of the parameters is provided
-    if not movie.imdb_id and not movie.title:
-        return HTTPException(status_code=400, detail="Either imdb_id or title must be provided")
-    movie.user_id = user.id
+
+    if not movie.imdb_id:
+        movie.imdb_id = get_imdb_id_from_title(movie.title)
+        if not movie.imdb_id:
+            return HTTPException(status_code=404, detail="IMDB ID not found")
+    
     with Session(engine) as session:
-        movie = create_movie(session, movie)
-        return movie
+        # check if the movie with the same imdb_id and user_id already exists
+        existing_movie = session.exec(select(Movie).where(Movie.imdb_id == movie.imdb_id, Movie.user_id == user.id)).first()
+        if existing_movie:
+            return HTTPException(status_code=409, detail="Movie already exists")
+    
+        mv_data = get_movie_details(movie.imdb_id)
+        if not mv_data:
+            return HTTPException(status_code=404, detail="Movie not found")
+        movie = MovieBase(
+            title=movie.title,
+            imdb_id=movie.imdb_id,
+            year=mv_data["year"],
+            plot=mv_data["plot"],
+            poster=mv_data["poster"],
+            genre=mv_data["genre"],
+            date_watched=movie.date_watched,
+            review=movie.review,
+            rating=movie.rating,
+            user_id=user.id,
+        )
 
-
+        return create_movie(session, movie)
+    
 @app.get("/movies/", dependencies=[Depends(auth.implicit_scheme)])
 async def mv_by_userid(
     user: Auth0User = Security(auth.get_user)
@@ -93,7 +113,7 @@ async def recommend_movies(user: Auth0User = Security(auth.get_user)):
             return HTTPException(status_code=404, detail="No movies found")
         recommendations = []
         for movie in user_movies:
-            movie_details = get_movie_details(movie["imdb_id"])
+            movie_details = get_movie_details(movie.imdb_id)
             if movie_details:
                 # dummy data for now
                 similar_movies = [

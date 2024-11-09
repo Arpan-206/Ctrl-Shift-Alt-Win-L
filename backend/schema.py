@@ -16,11 +16,16 @@ class MovieBase(BaseModel):
 class MovieUpdate(MovieBase):
     pass
 
-class MovieCreate:
-    imdb_id: str | None
+class MovieCreate(BaseModel):
+    imdb_id: str | None = None
+    title: str | None = None
+    date_watched: str
+    review: str
+    rating: int 
+    user_id: str | None = None
 
-class Movie(MovieBase):
-    id: int
+class MovieB(MovieBase):
+    id: int | None = None
 
     class Config:
         orm_mode = True
