@@ -10,9 +10,16 @@ load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_KEY")
 
+
 def find_similar_movies_via_ai(genre, plot, year):
     prompt = (
-        f"Generate movie recommendations based on the user's recently watched films. Use the provided IMDb IDs to retrieve detailed information for each movie, including full plot summaries, genres, and release years. Analyse each movie's plot and genre to identify similar themes and features that define its content.Recommend movies that align closely with these but are set in a different time period. Specifically, find movies that have a similar feel, theme, or storyline but in a differnt setting. The movies selected should be from different time periods check 40 years ahead and behind the year inputed"
+        f"Generate movie recommendations based on the user's recently watched films. "
+        f"Use the provided IMDb IDs to retrieve detailed information for each movie, "
+        f"including full plot summaries, genres, and release years. "
+        f"Analyse each movie's plot and genre to identify similar themes and features that define its content. "
+        f"Recommend movies that align closely with these but are set in a different time period. "
+        f"Specifically, find movies that have a similar feel, theme, or storyline but in a different setting. "
+        f"The movies selected should be from different time periods, check 40 years ahead and behind the year inputed. "
         f"Details: Genre: {genre}, Plot Summary: {plot}, Year: {year}. "
         f"For each recommended movie, provide the title, IMDb ID, and a reason in the following format:\n"
         f"Title: <movie title>\nIMDb ID: <imdb_id>\nReason: <detailed reason related to the movie>\n\n"
@@ -54,11 +61,13 @@ def find_similar_movies_via_ai(genre, plot, year):
     return recommendations
 
 
-def recommend_movies(user_movies):
+def recommend_movies(user_movies, session: Session):
     recommendations = []
     
     for movie in user_movies:
-        movie_details = get_movie_details(movie['imdb_id'])
+        # Access the attributes of the Movie object directly
+        imdb_id = movie.imdb_id  # Use dot notation to access the attribute
+        movie_details = get_movie_details(imdb_id)  # Fetch movie details using imdb_id
         
         if movie_details:
             similar_movies = find_similar_movies_via_ai(
@@ -69,6 +78,7 @@ def recommend_movies(user_movies):
             recommendations.extend(similar_movies)
     
     return recommendations
+
 
 
 def log_watched_movie(user_id, imdb_id, session: Session):
@@ -83,7 +93,7 @@ def handle_movie_logging_request(user_id, imdb_id, session: Session):
 
 
 def handle_movie_recommendation_request(user_movies, session: Session):
-    recommendations = recommend_movies(user_movies)
+    recommendations = recommend_movies(user_movies, session)
     recommendations_json = json.dumps(recommendations, indent=4)  # Format as JSON
     print("Recommendations in JSON format:")
     print(recommendations_json)
@@ -98,6 +108,10 @@ def triage_request(request_type, user_id, imdb_id=None, user_movies=None, sessio
         print("Invalid request type or missing parameters.")
 
 
+def get_user_movie_history(user_id: str, session: Session):
+    return get_movies_by_user_id(session, user_id)
+
+
 if __name__ == "__main__":
     user_id = "user123"
     imdb_id = "tt0111161"
@@ -105,6 +119,8 @@ if __name__ == "__main__":
     with next(db.get_session()) as session:
         triage_request('log', user_id, imdb_id=imdb_id, session=session)   
 
-    user_movies = [{"imdb_id": "tt0111161"}, {"imdb_id": "tt13186482"}]
+    with next(db.get_session()) as session:
+        user_movies = get_user_movie_history(user_id, session)
+
     with next(db.get_session()) as session:
         triage_request('recommend', user_id, user_movies=user_movies, session=session)
