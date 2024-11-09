@@ -1,6 +1,5 @@
 import openai
 import db
-import requests
 from dotenv import load_dotenv
 import os
 from helpers import *
@@ -9,7 +8,7 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_KEY")
 
 def find_similar_movies_via_ai(genre, plot, year):
-    refined_prompt = (
+    prompt = (
         f"Generate movie recommendations based on the user's recently watched movie details. "
         f"The movie has the following details: Genre: {genre}, Plot Summary: {plot}, and Year: {year}. "
         f"Identify movies that have a similar feel, theme, or storyline but are set in different time periods. "
@@ -19,8 +18,8 @@ def find_similar_movies_via_ai(genre, plot, year):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a movie recommendation engine."},
-            {"role": "user", "content": refined_prompt}
+            {"role": "system", "content": "You are a movie recommendation engine make sure that there are no duplicate recommendations."},
+            {"role": "user", "content": prompt}
         ],
         max_tokens=100
     )
@@ -51,14 +50,12 @@ def recommend_movies(user_movies):
 
 
 def log_watched_movie(user_id, imdb_id, session: Session):
-
     movie_details = get_movie_details(imdb_id)
     if movie_details:
         create_movie_from_imdb_id(imdb_id, user_id, session, "2021-10-10", "Great movie", 8)
 
 
 def handle_movie_logging_request(user_id, imdb_id, session: Session):
-
     log_watched_movie(user_id, imdb_id, session)
     print(f"Movie {imdb_id} logged successfully for user {user_id}.")
 
