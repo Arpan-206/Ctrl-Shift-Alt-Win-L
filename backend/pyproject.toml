@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "watermelon"
+version = "0.1.0"
+description = ""
+authors = ["Arpan Pandey <arpanpandey.aps@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {extras = ["standard"], version = "^0.115.4"}
+sqlmodel = "^0.0.22"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
