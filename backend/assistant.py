@@ -4,24 +4,14 @@ import requests
 from swarm import Agent
 from swarm.agents import create_triage_agent
 from swarm.repl import run_demo_loop
+from db import get_movie_details
+from dotenv import load_dotenv
+import os
 
-openai.api_key = 'add a key :('
+load_dotenv()
 
-def get_movie_details(imdb_id):
-    url = f"http://www.omdbapi.com/?i={imdb_id}&apikey=add a key :("
-    response = requests.get(url)
-    data = response.json()
-    
-    if data['Response'] == 'True':
-        return {
-            "title": data['Title'],
-            "genre": data['Genre'],
-            "plot": data['Plot'],
-            "year": int(data['Year']),
-        }
-    else:
-        print(f"Movie with IMDb ID {imdb_id} not found.")
-        return None
+openai.api_key = os.getenv("OPENAI_KEY")
+
 
 def recommend_movies(user_movies):
     recommendations = []
@@ -40,7 +30,7 @@ def find_similar_movies(genre, plot, year):
     year_range = range(year - 40, year + 40)  
     
     for year in year_range:
-        url = f"http://www.omdbapi.com/?s={genre}&y={year}&apikey=add a key :("
+        url = f"http://www.omdbapi.com/?s={genre}&y={year}&apikey={os.getenv('OMDB_API_KEY')}"
         response = requests.get(url)
         data = response.json()
         
