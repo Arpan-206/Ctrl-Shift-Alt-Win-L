@@ -27,6 +27,7 @@ print(response)
 '''
 import openai
 import db
+import requests
 from swarm import Agent
 from swarm.agents import create_triage_agent
 from swarm.repl import run_demo_loop
@@ -34,7 +35,7 @@ from swarm.repl import run_demo_loop
 openai.api_key = 'add a key :(' 
 
 def get_movie_details(imdb_id):
-    url = f"http://www.omdbapi.com/?i={imdb_id}&apikey=your_omdb_api_key"
+    url = f"http://www.omdbapi.com/?i={imdb_id}&apikey=add a key :("
     response = requests.get(url)
     data = response.json()
     
@@ -62,11 +63,24 @@ def recommend_movies(user_movies):
     return recommendations
 
 def find_similar_movies(genre, plot, year):
-    # NEED TO USE OMDb API HERE 
-    return [
-        {"title": "Movie 1", "imdb_id": "tt1234567", "genre": genre, "year": year + 20, "plot": "A similar plot from a different time period."},
-        {"title": "Movie 2", "imdb_id": "tt2345678", "genre": genre, "year": year - 15, "plot": "Another similar plot with a twist in a different era."}
-    ]
+    similar_movies = []
+    year_range = range(year - 40, year + 40)  
+    
+    for year in year_range:
+        url = f"http://www.omdbapi.com/?s={genre}&y={year}&apikey=your_omdb_api_key"
+        response = requests.get(url)
+        data = response.json()
+        
+        if data['Response'] == 'True':
+            for movie in data['Search']:
+                similar_movies.append({
+                    "title": movie['Title'],
+                    "imdb_id": movie['imdbID'],
+                    "genre": genre,
+                    "year": year,
+                    "plot": plot
+                })
+    return similar_movies
 
 def log_watched_movie(user_id, imdb_id):
     movie_details = get_movie_details(imdb_id)
