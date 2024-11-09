@@ -38,22 +38,47 @@ def update_movie(session: Session, movie_id: str, movie: Movie):
     session.refresh(movie)
     return movie
 
-
+    
 def get_movie_details(imdb_id: str):
     url = f"http://www.omdbapi.com/?i={imdb_id}&apikey={os.getenv('OMDB_API_KEY')}"
-    response = requests.get(url)
-    data = response.json()
+    try:
+        response = requests.get(url)
 
-    if data["Response"] == "True":
-        return {
-            "title": data["Title"],
-            "genre": data["Genre"],
-            "plot": data["Plot"],
-            "year": int(data["Year"]),
-            "poster": data["Poster"],
-        }
-    else:
-        print(f"Movie with IMDb ID {imdb_id} not found.")
+        if response.status_code != 200:
+            print(f"Error: Received status code {response.status_code} from OMDb API.")
+            return None
+
+        print(f"Response from OMDb API: {response.text}")  
+
+        data = response.json()
+
+        if data["Response"] == "True":
+            year = data["Year"]
+            
+            if "–" in year:
+                year = year.split("–")[0]
+            
+            try:
+                year = int(year)
+            except ValueError:
+                print(f"Invalid year format: {year}")
+                year = None 
+
+            return {
+                "title": data["Title"],
+                "genre": data["Genre"],
+                "plot": data["Plot"],
+                "year": year,
+                "poster": data["Poster"],
+            }
+        else:
+            print(f"Movie with IMDb ID {imdb_id} not found.")
+            return None
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+        return None
+    except ValueError as e:
+        print(f"JSON decoding error: {e}")
         return None
 
 

@@ -43,37 +43,40 @@ def recommend_movies(user_movies):
     return recommendations
 
 
-def log_watched_movie(user_id, imdb_id):
+def log_watched_movie(user_id, imdb_id, session: Session):
     movie_details = get_movie_details(imdb_id)
     if movie_details:
-        db.log_movie(user_id, imdb_id, movie_details['title'], movie_details['year'], movie_details['genre'])
+        create_movie_from_imdb_id(imdb_id, user_id, session, "2021-10-10", "Great movie", 8)
 
 
-def handle_movie_logging_request(user_id, imdb_id):
-    log_watched_movie(user_id, imdb_id)
+
+def handle_movie_logging_request(user_id, imdb_id, session: Session):
+    log_watched_movie(user_id, imdb_id, session)
     print(f"Movie {imdb_id} logged successfully for user {user_id}.")
 
 
-def handle_movie_recommendation_request(user_movies):
+def handle_movie_recommendation_request(user_movies, session: Session):
     recommendations = recommend_movies(user_movies)
     for film in recommendations:
         print(f"Recommended: {film['title']} ({film['year']}) - Genre: {film['genre']}")
 
 
-def triage_request(request_type, user_id, imdb_id=None, user_movies=None):
+def triage_request(request_type, user_id, imdb_id=None, user_movies=None, session: Session = None):
     if request_type == 'log' and imdb_id:
-        handle_movie_logging_request(user_id, imdb_id)
+        handle_movie_logging_request(user_id, imdb_id, session)   
     elif request_type == 'recommend' and user_movies:
-        handle_movie_recommendation_request(user_movies)
+        handle_movie_recommendation_request(user_movies, session)  
     else:
         print("Invalid request type or missing parameters.")
 
 
 if __name__ == "__main__":
     user_id = "user123"
-    imdb_id = "tt1234567"
-    
-    triage_request('log', user_id, imdb_id=imdb_id)
-    
-    user_movies = [{"imdb_id": "tt9876543"}, {"imdb_id": "tt2345678"}]
-    triage_request('recommend', user_id, user_movies=user_movies)
+    imdb_id = "tt0111161"
+
+    with next(db.get_session()) as session:
+        triage_request('log', user_id, imdb_id=imdb_id, session=session)   
+
+    user_movies = [{"imdb_id": "tt0111161"}, {"imdb_id": "ttt0111161"}]
+    with next(db.get_session()) as session:
+        triage_request('recommend', user_id, user_movies=user_movies, session=session)   
