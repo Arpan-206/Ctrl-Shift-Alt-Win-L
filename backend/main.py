@@ -48,6 +48,18 @@ async def update_movie(movie_id: str, movie: MovieCreate):
         movie = update_movie(session, movie_id, movie)
         return movie
 
+# recommended movies
+@app.get("/{user_id}/recommend_movies/")
+async def recommend_movies(user_id: str):
+    with Session(engine) as session:
+        user_movies = get_movies_by_user_id(session, user_id)
+        recommendations = []
+        for movie in user_movies:
+            movie_details = get_movie_details(movie['imdb_id'])
+            if movie_details:
+                similar_movies = find_similar_movies(movie_details['genre'], movie_details['plot'], movie_details['year'])
+                recommendations.extend(similar_movies)
+        return recommendations
 
 @app.on_event("startup")
 def on_startup():

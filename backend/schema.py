@@ -7,6 +7,7 @@ class MovieBase(BaseModel):
     year: int
     plot: str
     poster: str
+    genre: str
     date_watched: str
     review: str
     rating: int
