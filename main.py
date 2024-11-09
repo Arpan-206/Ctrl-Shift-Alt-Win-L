@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Depends, Security
 from db import *
 from helpers import *
 from schema import *
+from assistant import *
 import requests
 from dotenv import load_dotenv
 import os
@@ -105,24 +106,22 @@ async def update_movie(movie_id: str, movie: MovieUpdate, user: Auth0User = Secu
 
 # recommended movies
 @app.get("/recommend_movies/", dependencies=[Depends(auth.implicit_scheme)])
-async def recommend_movies(user: Auth0User = Security(auth.get_user)):
-    with Session(engine) as session:
+async def recommend_movie(user: Auth0User = Security(auth.get_user)):
+    with next(get_session()) as session:
         user_id = user.id
-        user_movies = get_movies_by_user_id(session, user_id)
-        if not user_movies:
-            return HTTPException(status_code=404, detail="No movies found")
-        recommendations = []
-        for movie in user_movies:
-            movie_details = get_movie_details(movie.imdb_id)
-            if movie_details:
-                # dummy data for now
-                similar_movies = [
-                    {"title": "The Shawshank Redemption", "imdb_id": "tt0111161", "reason": "is a great movie"},
-                    {"title": "The Godfather", "imdb_id": "tt0068646", "reason": "is a great movie"},
-                    {"title": "The Dark Knight", "imdb_id": "tt0468569", "reason": "is a great movie"},
-                ]
-                recommendations.extend(similar_movies)
+        user_movies = get_user_movie_history(user_id, session)
+        recommendations = json.loads(handle_movie_recommendation_request(user_movies, session))
+
+        for recommendation in recommendations:
+            # add movie data from omdb
+            movie_data = get_movie_details(recommendation["IMDb ID"])
+            recommendation["Year"] = movie_data["year"]
+            recommendation["Plot"] = movie_data["plot"]
+            recommendation["Poster"] = movie_data["poster"]
+            recommendation["Genre"] = movie_data["genre"]
+
         return recommendations
+
 
 
 @app.on_event("startup")
