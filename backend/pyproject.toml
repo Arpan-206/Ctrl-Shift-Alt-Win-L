@@ -12,6 +12,7 @@ fastapi = {extras = ["standard"], version = "^0.115.4"}
 sqlmodel = "^0.0.22"
 python-dotenv = "^1.0.1"
 requests = "^2.32.3"
+swarm = {git = "https://github.com/openai/swarm.git"}
 
 
 [build-system]
