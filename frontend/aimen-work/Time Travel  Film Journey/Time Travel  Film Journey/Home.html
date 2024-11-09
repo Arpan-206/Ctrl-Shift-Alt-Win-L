@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link href="MainStyle.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <title>Home Page</title>
+</head>
+<body>
+    <div class="container">
+        <div class="stars"></div>
+        <div class="actionbtn">
+            <span class="fas fa-light fa-star"></span>
+            <script src="JavaScript.js"></script>
+        </div>
+
+        <ul class="navbar">
+            <li style="--delay:1"><a href="https://localhost:44316/Home.html#">Home</a></li>
+            <li style="--delay:2"><a href="#">About</a></li>
+            <li style="--delay:3"><a href="https://localhost:44316/MyFilms.html">My Films</a></li>
+            <li style="--delay:4"><a href="#">Log a Film</a></li>
+            <li style="--delay:5"><a href="https://localhost:44316/MyJourney.html">My Journey</a></li>
+            <li style="--delay:6"><a href="#">Discover</a></li>
+        </ul>
+
+
+
+        <div class="banner">
+            <div class="vidbg">
+                <video autoplay muted loop id="bg-video">
+                    <source src="Hollywood Blur.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="text">
+                <h1>Film Odyssey</h1>
+                <p class="info">Film Journey is your gateway to exploring the cinematic universe across time. Log the films you've watched, discover new titles, and trace your viewing history on a personalized timeline. Whether you're diving into classic films, modern blockbusters, or hidden gems, Film Journey helps you reflect on your adventures through the world of cinema and uncover new destinations to explore.</p>
+                <div class="btns">
+                    <a href="#">Discover Films</a>
+                    <a href="#">Log a film</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const actionbtn = document.querySelector('.actionbtn');
+        const navbar = document.querySelector('.navbar');
+        const banner = document.querySelector('.banner');
+
+        actionbtn.addEventListener('click', () => {
+            actionbtn.classList.toggle('active');
+            navbar.classList.toggle('active');
+            banner.classList.toggle('active');
+        })
+    </script>
+
+
+</body>
+</html>
