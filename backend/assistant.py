@@ -20,7 +20,7 @@ def find_similar_movies_via_ai(genre, plot, year):
     )
     
     response = openai.ChatCompletion.create(
-        model="gpt-4o",
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "You are a movie recommendation engine generating structured responses."},
             {"role": "user", "content": prompt}
@@ -30,6 +30,7 @@ def find_similar_movies_via_ai(genre, plot, year):
     
     recommendations = []
     response_text = response['choices'][0]['message']['content'].strip().split('\n\n')
+    print(response_text)
     
     for item in response_text:
         lines = item.split('\n')

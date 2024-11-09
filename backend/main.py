@@ -42,19 +42,14 @@ async def suggest_movies(current_param: str):
 
 @app.post("/movies/", dependencies=[Depends(auth.implicit_scheme)])
 async def create_movie(
-    title: str | None = None,
-    imdb_id: str | None = None,
-    rating: int = 4,
-    review: str = "",
-    date_watched: datetime.date = datetime.date.today(),
+    movie: MovieCreate,
     user: Auth0User = Security(auth.get_user),
 ):
+    print(movie)
     # check if atleast one of the parameters is provided
-    if not title and not imdb_id:
-        return HTTPException(
-            status_code=400, detail="At least one of the parameters is required"
-        )
-    movie = MovieCreate(title=title, imdb_id=imdb_id, user_id=user.id, rating=rating, review=review)
+    if not movie.imdb_id and not movie.title:
+        return HTTPException(status_code=400, detail="Either imdb_id or title must be provided")
+    movie.user_id = user.id
     with Session(engine) as session:
         movie = create_movie(session, movie)
         return movie
@@ -74,7 +69,7 @@ async def mv_by_userid(
 
 
 @app.put("/movie/{movie_id}", dependencies=[Depends(auth.implicit_scheme)])
-async def update_movie(movie_id: str, movie: MovieCreate, user: Auth0User = Security(auth.get_user)):
+async def update_movie(movie_id: str, movie: MovieUpdate, user: Auth0User = Security(auth.get_user)):
     with Session(engine) as session:
         # check if movie exists
         existing_movie = get_movie_by_id(session, movie_id)
@@ -89,17 +84,23 @@ async def update_movie(movie_id: str, movie: MovieCreate, user: Auth0User = Secu
 
 
 # recommended movies
-@app.get("/{user_id}/recommend_movies/")
-async def recommend_movies(user_id: str):
+@app.get("/recommend_movies/", dependencies=[Depends(auth.implicit_scheme)])
+async def recommend_movies(user: Auth0User = Security(auth.get_user)):
     with Session(engine) as session:
+        user_id = user.id
         user_movies = get_movies_by_user_id(session, user_id)
+        if not user_movies:
+            return HTTPException(status_code=404, detail="No movies found")
         recommendations = []
         for movie in user_movies:
             movie_details = get_movie_details(movie["imdb_id"])
             if movie_details:
-                similar_movies = find_similar_movies(
-                    movie_details["genre"], movie_details["plot"], movie_details["year"]
-                )
+                # dummy data for now
+                similar_movies = [
+                    {"title": "The Shawshank Redemption", "imdb_id": "tt0111161", "reason": "is a great movie"},
+                    {"title": "The Godfather", "imdb_id": "tt0068646", "reason": "is a great movie"},
+                    {"title": "The Dark Knight", "imdb_id": "tt0468569", "reason": "is a great movie"},
+                ]
                 recommendations.extend(similar_movies)
         return recommendations
 

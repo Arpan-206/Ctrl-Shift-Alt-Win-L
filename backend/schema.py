@@ -1,6 +1,6 @@
 from models import *
 from pydantic import BaseModel
-
+import datetime as da
 class MovieBase(BaseModel):
     imdb_id: str
     title: str
@@ -13,8 +13,11 @@ class MovieBase(BaseModel):
     rating: int
     user_id: str
 
-class MovieCreate(MovieBase):
+class MovieUpdate(MovieBase):
     pass
+
+class MovieCreate:
+    imdb_id: str | None
 
 class Movie(MovieBase):
     id: int
