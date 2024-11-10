@@ -460,6 +460,7 @@ Functionality:
 What better way to travel through time than by immersing yourself in the worlds of the movies you've watched?
 Movies allow us to experience different time periods, settings, and worlds. Whether you're in medieval times, the distant future, or a parallel universe, movies let us journey through time.
 With this concept in mind, we focused on building a website with a starry, cosmic theme that represents the endless possibilities of time travel in cinema.
+## UX/UI design
 ![Journey Chatbot](images/home.png)
 ![Journey Chatbot](images/profile.png)
 ![Journey Chatbot](images/p1.png)
