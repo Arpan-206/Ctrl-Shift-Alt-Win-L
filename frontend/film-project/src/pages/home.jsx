@@ -1,5 +1,5 @@
 import "./styles/home.css"
-
+import Header from "./components/Header";
 import {useRef, useState, useEffect} from "react"
 function HomePage()
 {
@@ -8,12 +8,9 @@ function HomePage()
         
     return(
         <>
-            <div className="absolute w-[100vw] top-[0px] h-[10vh] z-50 bg-[#FFFFFF]">
-                    
-            </div>
+        
             <div className="container h-[90vh]">
-                
-                <button className="actionbtn" onClick={()=>{setSideMenuState(!sideMenuState)}}></button>
+                <Header></Header>
                 <div className="stars"></div>
                 <div onClick={() => {setSideMenuState(!sideMenuState); console.log(sideMenuState)}}>
                     <span className="fas fa-light fa-star"></span>
@@ -28,12 +25,6 @@ function HomePage()
                     <li><a href="#">Discover</a></li>
                 </ul>
                 <div className={sideMenuState==false ? "banner" : "banner.active"}>
-                    <div className="vidbg">
-                        <video autoPlay muted loop id="bg-video">
-                            <source src="Hollywood Blur.mp4" type="video/mp4"></source>
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
                     <div className="text">
                         <h1>Film Odyssey</h1>
                         <p className="info">Film Journey is your gateway to exploring the cinematic universe across time. Log the films you've watched, discover new titles, and trace your viewing history on a personalized timeline. Whether you're diving into classic films, modern blockbusters, or hidden gems, Film Journey helps you reflect on your adventures through the world of cinema and uncover new destinations to explore.</p>
