@@ -462,7 +462,7 @@ Movies allow us to experience different time periods, settings, and worlds. Whet
 With this concept in mind, we focused on building a website with a starry, cosmic theme that represents the endless possibilities of time travel in cinema.
 ## UX/UI design
 ![Journey Chatbot](images/home.png)
+![Journey Chatbot](images/about.png)
 ![Journey Chatbot](images/profile.png)
 ![Journey Chatbot](images/p1.png)
-![Journey Chatbot](images/about.png)
 ![Journey Chatbot](images/p2.png)
