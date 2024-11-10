@@ -245,4 +245,223 @@ Fields:
     user_id (str): The unique identifier for the user (primary key).
     password (str): The user's password, stored securely.
 
+## Speech To Text Chatbot feature (stt.py)
+### 1. SpeakText(command)
+
+Purpose: Converts text to speech using the pyttsx3 library.
+
+    Parameters:
+        command (str): The text that should be spoken.
+    Functionality:
+        Initializes the pyttsx3 text-to-speech engine.
+        Uses engine.say(command) to queue up the command to be spoken.
+        Then, engine.runAndWait() processes and plays the speech.
+
+### 2. recognise_speech()
+
+Purpose: Recognizes speech input using the speech_recognition library.
+
+    Parameters: None.
+
+    Functionality:
+        Creates a Recognizer object to process speech.
+        Uses sr.Microphone() to listen to the audio input through the microphone.
+        Adjusts for ambient noise to improve recognition accuracy.
+        Records the audio and tries to recognize the speech using Google's speech-to-text API.
+        Returns the transcribed speech as a string, in lowercase.
+
+    Error Handling:
+        If the speech is not recognized (UnknownValueError), it returns None and prints an error message.
+        If there's a request issue (RequestError), it returns None and prints the error message.
+
+### 3. Get movie details
+
+Purpose: Fetches detailed information about a movie based on its IMDb ID using the OMDb API.
+
+Parameters:
+    imdb_id (str): The IMDb ID of the movie to fetch details for.
+
+Functionality:
+    Constructs the OMDb API request URL with the provided IMDb ID.
+    Makes an API request to OMDb, and if successful, parses the response.
+    Extracts the movie's title, genre, plot, year, and poster.
+    If the year contains a range (e.g., "2000–2005"), it only considers the starting year.
+    Returns a dictionary containing the movie's details (title, genre, plot, year, poster).
+    If the request fails or the IMDb ID is not found, it returns None.
+
+Error Handling:
+    Handles connection issues with requests.exceptions.RequestException.
+    Catches ValueError if the year format is invalid.
+
+### 4. Get imdb id from title
+
+Purpose: Retrieves the IMDb ID of a movie based on its title using the OMDb API.
+
+Parameters:
+    title (str): The title of the movie to search for.
+
+Functionality:
+    Constructs the OMDb API request URL with the provided movie title.
+    Makes an API request to OMDb, and if successful, retrieves the IMDb ID.
+    Returns the IMDb ID if found, or None if not found.
+
+Error Handling:
+    Handles connection issues with requests.exceptions.RequestException.
+
+### 5. Get user movie history 
+
+Purpose: Retrieves the movie history for a specific user.
+
+Parameters:
+    user_id (str): The ID of the user whose movie history is to be retrieved.
+    session (Session): The SQLAlchemy session to interact with the database.
+Functionality:
+    Calls the get_movies_by_user_id function (from the db module, assumed to be responsible for database operations) to get the user's movie history.
+    Returns a list of movies for the specified user.
+
+### 6. Analyse logging intent
+
+Purpose: Analyses if the user's input is a request to log or save a movie using a ai model trained on the permutations of the user expressing they want to log
+
+Parameters:
+    user_input (str): The user's speech input to be analyzed.
+
+Functionality:
+    Uses OpenAI's GPT-4 model to analyze the user input based on predefined examples of recommendation requests.
+    Returns True if the input seems like a recommendation request, or False otherwise.
+
+How it works:
+    A prompt is fed into GPT-4, asking if the user input matches a request for a movie recommendation. The model responds with "Yes" or "No."
+
+Error Handling:
+    Handles issues with the OpenAI API response if the expected structure is not present.
+
+### 7. Handle recommendation request
+
+Purpose: Handles a recommendation request by generating and speaking movie recommendations based on the user's movie history.
+
+Parameters:
+    user_movies (list): A list of movies the user has watched, which will be used to generate recommendations.
+    session (Session): The SQLAlchemy session to interact with the database.
+Functionality:
+    Calls the recommend_movies function to generate recommendations based on the user's movie history.
+    Converts the recommendations into a nicely formatted JSON string and prints them.
+    Uses the SpeakText function to speak the recommendations to the user.
+
+### 8. Recommend movies
+
+Purpose: Generates a list of movie recommendations based on the user's movie history.
+
+Parameters:
+    user_movies (list): A list of movies that the user has watched.
+Functionality:
+    Loops through the user's movie history and fetches details for each movie (using the get_movie_details function).
+    For each movie, it uses the find_similar_movies_via_ai function to find similar movies based on the genre, plot, and year.
+    Collects and returns the generated recommendations.
+
+### 9. Find similar movies via ai
+
+Purpose: Uses OpenAI's GPT-4 to find movies similar to a given movie but set in a different time period.
+
+Parameters:
+    genre (str): The genre of the movie.
+    plot (str): The plot summary of the movie.
+    year (int): The release year of the movie.
+
+Functionality:
+    Constructs a detailed prompt for GPT-4 to generate movie recommendations.
+    The prompt instructs GPT-4 to find movies with similar themes or storylines, but set in a different time period (up to 40 years before or after the original movie's release).
+    The response is parsed and returned as a list of movie recommendations in JSON format.
+
+Error Handling:
+    Catches json.JSONDecodeError if the GPT-4 response is not a valid JSON.
+
+### 10. Analyse logging intent
+
+Purpose: Analyses if the user's input is a request to log or save a movie using a ai model trained on the permutations of the user expressing they want to log
+
+Parameters:
+    user_input (str): The user's speech input to be analyzed.
+Functionality:
+    Similar to analyse_intent, but this time, it checks if the user's input corresponds to logging a movie (e.g., adding a movie to a watchlist).
+    Uses GPT-4 to determine if the input is related to logging a movie, responding with "Yes" or "No."
+
+### 11. Handling logging request
+
+Purpose: Handles a request to log a movie for a user.
+
+Parameters:
+    user_id (str): The ID of the user.
+    imdb_id (str): The IMDb ID of the movie to log.
+    session (Session): The SQLAlchemy session to interact with the database.
+Functionality:
+    Fetches the movie details using the get_movie_details function.
+    Calls the create_movie_from_imdb_id function (assumed to create a movie record in the database) to log the movie for the user.
+
+### 12. Handling logging request by title
+
+Purpose: Handles a request to log a movie based on its title.
+
+Parameters:
+    user_input (str): The title of the movie.
+    user_id (str): The ID of the user.
+    session (Session): The SQLAlchemy session to interact with the database.
+Functionality:
+    Attempts to get the IMDb ID using the get_imdb_id_from_title function.
+    If the IMDb ID is found, it logs the movie using handle_logging_request.
+    If no exact match is found, it searches for similar titles using get_similar_titles and lets the user choose a movie from the list.
+
+### 13 A. Getting similar titles
+
+Purpose: Finds movies similar to the given title using the OMDb API.
+
+Parameters:
+    title (str): The title of the movie to search for.
+Functionality:
+    Makes a request to the OMDb API to search for movies with similar titles.
+    If successful, it returns a list of movie titles found in the search results.
+
+ ### 13 B. Getting similar titles from openai
+
+Purpose: The function get_similar_titles_from_openai uses OpenAI's GPT-4 model to find and recommend a list of movie titles that are most similar to a given movie title. It formulates a prompt for the AI model that asks it to identify movie titles with substrings matching the given title, while ignoring case and punctuation.
+
+Steps:
+
+    Prompt Construction:
+        The function constructs a prompt that includes the movie title and asks the model to return 5 movie titles most similar to the given one.
+    OpenAI API Request:
+        The prompt is sent to OpenAI's GPT-4 model via the openai.ChatCompletion.create method, using a system message to set the assistant's role and a user message with the constructed prompt.
+    Response Handling:
+        Once the AI responds, the function extracts the relevant movie titles from the response and splits them into a list, which is returned.
+    Error Handling:
+        If there is an issue during the OpenAI API request (e.g., connectivity problems or unexpected response format), an exception is caught, and an error message is printed. The function then returns None.
+
+Output:
+
+    A list of movie titles (up to 5) that are most similar to the provided title, based on substring matching.
+
+### 14. Triage Request
+
+Purpose: Decides what action to take based on the type of user request.
+
+Parameters:
+    request_type (str): The type of request (e.g., 'log', 'recommend', 'check_recommendation').
+    user_id (str): The user ID for movie logging or recommendation.
+    imdb_id (str, optional): The IMDb ID for logging or checking.
+    user_movies (list, optional): The user's movie history for generating recommendations.
+    session (Session, optional): The database session for interaction.
+    user_input (str, optional): The user's speech input for analyzing intent.
+Functionality:
+    Directs the request to the appropriate handler function (handle_logging_request, handle_recommendation_request, etc.) based on the request_type
+
 ![Journey Chatbot](images/journey-chatbot.png)
+
+# Frontend
+What better way to travel through time than by immersing yourself in the worlds of the movies you've watched?
+Movies allow us to experience different time periods, settings, and worlds. Whether you're in medieval times, the distant future, or a parallel universe, movies let us journey through time.
+With this concept in mind, we focused on building a website with a starry, cosmic theme that represents the endless possibilities of time travel in cinema.
+![Journey Chatbot](images/home.png)
+![Journey Chatbot](images/profile.png)
+![Journey Chatbot](images/p1.png)
+![Journey Chatbot](images/about.png)
+![Journey Chatbot](images/p2.png)
