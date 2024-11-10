@@ -1,18 +1,37 @@
 import {useEffect} from "react";
 import "./styles/timeline.css";
 import Header from "./components/Header";
+import GetTimeLine from "../API/Timeline";
 export default function Timeline()
 {
     useEffect(()=>{
         createStars();
+        GetTimeLine();
+        
     },[]);
+    let movieData = [
+        {
+            title: "Paddington",
+            year: "2014",
+            plot: "The bessst.",
+            date_watched: "release date",
+            poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3aFkoa9hig8TVAglf01TXnyjPGWMeZiXeyw&s",
+        },
+        {
+            title: "TEST 2",
+            year: "1000",
+            plot: "PLOT2",
+            date_watched: "N/A",
+            poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3aFkoa9hig8TVAglf01TXnyjPGWMeZiXeyw&s",
+        }
+    ]
+    
     return (
         <>
+            <div className="containerf w-[100vw] text-center">
             
-            <div className="containerf w-full text-center">
-            
-        <div className="stars"></div>
-        <div className="actionbtn">
+                <div className="stars"></div>
+                <div className="actionbtn">
             <span className="fas fa-light fa-star"></span>
         </div>
 
@@ -25,61 +44,18 @@ export default function Timeline()
 
         {/*<!-- Vertical Timeline Section -->*/}
         <section className="vertical-timeline">
-            <div className="timeline-item">
-                <div className="timeline-content">
-                    <h2 className="date-item">2008</h2>
-                    <p>Marvel Studios releases *Iron Man*, kicking off the Marvel Cinematic Universe (MCU) and changing the landscape of superhero films forever.</p>
-                    <img src="SATSV.jpg" alt="Iron Man" class="film-image"></img>
-                </div>
-            </div>
-
-            <div className="timeline-item">
-                <div className="timeline-content">
-                    <h2 className="date-item">2010</h2>
-                    <p>*Inception*, directed by Christopher Nolan, leaves audiences questioning reality with its mind-bending mix of dreams and action-packed sci-fi.</p>
-                    <img src="SATSV.jpg" alt="Inception" class="film-image"></img>
-                </div>
-            </div>
-
-            <div className="timeline-item">
-                <div className="timeline-content">
-                    <h2 className="date-item">2014</h2>
-                    <p>*Interstellar* takes viewers on a journey through space and time, exploring the boundaries of physics, love, and survival.</p>
-                    <img src="SATSV.jpg" alt="Interstellar" class="film-image"></img>
-                </div>
-            </div>
-
-            <div className="timeline-item">
-                <div className="timeline-content">
-                    <h2 className="date-item">2019</h2>
-                    <p>*Avengers: Endgame* smashes box office records and becomes a cultural phenomenon, bringing a satisfying conclusion to over a decade's worth of superhero storytelling.</p>
-                    <img src="SATSV.jpg" alt="Avengers: Endgame" class="film-image"></img>
-                </div>
-            </div>
-
-            <div className="timeline-item">
-                <div className="timeline-content">
-                    <h2 className="date-item">2021</h2>
-                    <p>*Dune*, directed by Denis Villeneuve, brings Frank Herbert’s sci-fi epic to the big screen with stunning visuals and a star-studded cast.</p>
-                    <img src="SATSV.jpg" alt="Dune" class="film-image"></img>
-                </div>
-            </div>
-
-            <div className="timeline-item">
-                <div className="timeline-content">
-                    <h2 className="date-item">2022</h2>
-                    <p>*The Batman*, directed by Matt Reeves, offers a darker, more grounded take on Gotham's Caped Crusader.</p>
-                    <img src="SATSV.jpg" alt="The Batman" class="film-image"></img>
-                </div>
-            </div>
-
-            <div className="timeline-item">
-                <div className="timeline-content">
-                    <h2 className="date-item">2023</h2>
-                    <p>*Oppenheimer*, directed by Christopher Nolan, explores the life of J. Robert Oppenheimer and the creation of the atomic bomb.</p>
-                    <img src="SATSV.jpg" alt="Oppenheimer" class="film-image"></img>
-                </div>
-            </div>
+            {movieData.map((movie, index) => {
+                return(
+                    <div className="timeline-item">
+                        <div className="timeline-content">
+                            <h2 className="date-item">{movie.date_watched}</h2>
+                            <p>{movie.plot}</p>
+                            <img src={movie.poster} alt="Iron Man" class="film-image"></img>
+                        </div>
+                    </div>
+                )
+            }
+            )}
         </section>
     </div>
         </>

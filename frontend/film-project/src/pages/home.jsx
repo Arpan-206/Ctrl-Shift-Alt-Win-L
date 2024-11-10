@@ -3,29 +3,19 @@ import Header from "./components/Header";
 import {useRef, useState, useEffect} from "react"
 function HomePage()
 {
-    const [sideMenuState, setSideMenuState] = useState(false);
     useEffect(() => {createStars();}, [])
         
     return(
         <>
         
-            <div className="container h-[90vh]">
+            <div className="w-[100vw] h-[100vh]">
                 <Header></Header>
                 <div className="stars"></div>
                 <div onClick={() => {setSideMenuState(!sideMenuState); console.log(sideMenuState)}}>
                     <span className="fas fa-light fa-star"></span>
                 </div>
-
-                <ul className={sideMenuState==false ? "navbar": "navbar.active"}>
-                    <li><a href="https://localhost:44316/Home.html#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="https://localhost:44316/MyFilms.html">My Films</a></li>
-                    <li><a href="https://localhost:44316/MyJourney.html">Log a Film</a></li>
-                    <li><a href="#">My Journey</a></li>
-                    <li><a href="#">Discover</a></li>
-                </ul>
-                <div className={sideMenuState==false ? "banner" : "banner.active"}>
-                    <div className="text">
+                <div className="absolute w-[100%] text-center flex justify-center">
+                    <div className="h-[100%] w-[80%] ">
                         <h1>Film Odyssey</h1>
                         <p className="info">Film Journey is your gateway to exploring the cinematic universe across time. Log the films you've watched, discover new titles, and trace your viewing history on a personalized timeline. Whether you're diving into classic films, modern blockbusters, or hidden gems, Film Journey helps you reflect on your adventures through the world of cinema and uncover new destinations to explore.</p>
                         <div className="btns">

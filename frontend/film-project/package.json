@@ -10,6 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
+    "@nextui-org/react": "^2.4.8",
+    "axios": "^1.7.7",
+    "framer-motion": "^11.11.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^6.28.0",
