@@ -10,6 +10,7 @@ html, body {
 body {
     background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
     color: white;
+    height: auto;
 }
 
 /* Starry Background */
@@ -26,7 +27,6 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
     pointer-events: none;
 }
 
@@ -58,7 +58,7 @@ body {
 
 /* Title and Caption */
 .timeline-title {
-    font-family: "Limelight", sans-serif;
+    /*font-family: "Limelight", sans-serif;*/
     text-align: center;
     font-size: 3rem;
     color: #ffffff;
@@ -66,7 +66,7 @@ body {
 }
 .date-item
 {
-    font-family: "Limelight", sans-serif;
+    /*font-family: "Limelight", sans-serif;*/
 
 }
 
@@ -218,10 +218,6 @@ body {
     min-height: 100vh;
   }
   
-  h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
-  }
   
   button {
     border-radius: 8px;
@@ -242,16 +238,5 @@ body {
     outline: 4px auto -webkit-focus-ring-color;
   }
   
-  @media (prefers-color-scheme: light) {
-    :root {
-      color: #213547;
-      background-color: #ffffff;
-    }
-    a:hover {
-      color: #747bff;
-    }
-    button {
-      background-color: #f9f9f9;
-    }
-  }
+  
   

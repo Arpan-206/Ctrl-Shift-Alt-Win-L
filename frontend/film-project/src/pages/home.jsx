@@ -7,13 +7,9 @@ function HomePage()
         
     return(
         <>
-        
             <div className="w-[100vw] h-[100vh]">
                 <Header></Header>
                 <div className="stars"></div>
-                <div onClick={() => {setSideMenuState(!sideMenuState); console.log(sideMenuState)}}>
-                    <span className="fas fa-light fa-star"></span>
-                </div>
                 <div className="absolute w-[100%] text-center flex justify-center">
                     <div className="h-[100%] w-[80%] ">
                         <h1>Film Odyssey</h1>

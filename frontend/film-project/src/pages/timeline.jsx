@@ -1,56 +1,41 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import "./styles/timeline.css";
 import Header from "./components/Header";
 import GetTimeLine from "../API/Timeline";
 export default function Timeline()
 {
+    const [data, setData] = useState([]);
     useEffect(()=>{
         createStars();
-        GetTimeLine();
-        
+        GetTimeLine().then(response => {
+            data = setData(response);
+            
+            
+        });
     },[]);
-    let movieData = [
-        {
-            title: "Paddington",
-            year: "2014",
-            plot: "The bessst.",
-            date_watched: "release date",
-            poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3aFkoa9hig8TVAglf01TXnyjPGWMeZiXeyw&s",
-        },
-        {
-            title: "TEST 2",
-            year: "1000",
-            plot: "PLOT2",
-            date_watched: "N/A",
-            poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3aFkoa9hig8TVAglf01TXnyjPGWMeZiXeyw&s",
-        }
-    ]
     
     return (
         <>
-            <div className="containerf w-[100vw] text-center">
+            <div className="absolute top-[0px] w-auto text-center">
             
                 <div className="stars"></div>
-                <div className="actionbtn">
-            <span className="fas fa-light fa-star"></span>
-        </div>
-
-
         {/*<!-- Title and Caption -->*/}
-        <Header></Header>
-        
+        <Header className="absolute top-[0px]"></Header>
+        {console.log(data)}
         <h1 className="timeline-titleg text-center relative">My Film Journey</h1>
         <p className="timeline-caption font-Noto-Sans">Explore the films that shaped your journey through time</p>
 
         {/*<!-- Vertical Timeline Section -->*/}
         <section className="vertical-timeline">
-            {movieData.map((movie, index) => {
+            {data!=null && data.map((movie, index) => {
                 return(
+                    
                     <div className="timeline-item">
                         <div className="timeline-content">
+                            <h3 className="text-center text-[35px] mt-[5px]">{movie.title}</h3>
                             <h2 className="date-item">{movie.date_watched}</h2>
                             <p>{movie.plot}</p>
-                            <img src={movie.poster} alt="Iron Man" class="film-image"></img>
+                            <img src={movie.poster} alt="Iron Man" className="film-image relative justify-self-center flex"></img>
                         </div>
                     </div>
                 )
