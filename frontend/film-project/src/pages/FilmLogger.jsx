@@ -1,11 +1,23 @@
 import Header from "./components/Header"
-import {Modal, ModalContent, ModalHeader, Input, ModalBody, DateInput, Textarea, Button} from "@nextui-org/react"
+import {Modal, ModalContent, ModalHeader, Input, ModalBody, DateInput, Textarea, Button, Autocomplete, AutocompleteItem} from "@nextui-org/react"
 import {useRef, useState, useEffect} from "react"
 import SubmitItems from "../API/FilmLogger"
+import { GetItems } from "../API/FilmLogger"
 import "./styles/home.css";
 export default function FilmLogger()
 {
-    useEffect(() => {createStars();}, [])
+    
+    useEffect(() => 
+        {
+            createStars();
+
+        }, [])
+    useEffect(() => {
+        GetItems().then(respone=>{
+        });
+    }, [search]);
+    const[search, setSearchParam] = useState("");
+    const [searchResult, setSearchResult] = useState([]);
     return(
         <div>
 
@@ -18,7 +30,13 @@ export default function FilmLogger()
                     </div>
                     <img src="https://placehold.co/2000x3000" className="absolute ml-[50px] w-[200px] rounded-[15px]"></img>
                     <div className="InputFields ml-[290px] mr-[20px]">
-                        <Input className="mb-[10px]"placeholder="Film Name"></Input>
+                        <Autocomplete className="mb-[10px]"placeholder="Film Name" onChange={()=>{setSearchParam(target.value)}}>
+                            {searchResult.map((item, index) => {
+                                return(
+                                    <AutocompleteItem key={index}>{item[0]}</AutocompleteItem>
+                                )
+                            })}
+                        </Autocomplete>
                         <DateInput className="mb-[10px]"placeholder="Watch Date"></DateInput>
                         <Textarea className="min-h-[300px]" placeholder="Write a review!"></Textarea>
                     </div>

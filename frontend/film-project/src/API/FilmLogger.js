@@ -12,4 +12,17 @@ export default async function SubmitItems(title, dateWatched, review, rating)
             "rating": rating, // Out of 10
           }
     );
+    return request.data;
+}
+export async function GetItems(searchValue)
+{
+    var request = await axios.get("https://watermelon-bpwf.onrender.com/suggest_titles/?current_param=" + searchValue,
+    {
+    }
+    
+).then(response => {
+    console.log(response);
+    return response;
+});
+    
 }

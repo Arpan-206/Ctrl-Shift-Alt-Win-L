@@ -1,7 +1,13 @@
 .glass
 {
      background: rgba(255, 255, 255, .1);
-    align-items: center;
     backdrop-filter: blur(1.5px);
     border-bottom: 2px solid rgba(255, 255, 255, .2);
+    color: #F8F6E7;
+}
+.glass:hover
+{
+    box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.5); /* Subtle glow effect */
+        background: rgba(0, 0, 0, 0.3); /* Slightly darken on hover */
+        transform: scale(1.05); /* Slight scale-up on hover */
 }
