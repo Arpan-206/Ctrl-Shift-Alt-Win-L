@@ -13,58 +13,49 @@ def speak(text):
     engine.say(text)
     engine.runAndWait()
 
+# Initialize recognizer
+
+r = sr.Recognizer()
+
 def listen():
-    recognizer = sr.Recognizer()
+    # listen once
     with sr.Microphone() as source:
         print("Listening...")
-        audio = recognizer.listen(source)
+        r.adjust_for_ambient_noise(source)
+        audio = r.listen(source)
         try:
-            text = recognizer.recognize_google(audio)
+            text = r.recognize_google(audio)
             print(f"You said: {text}")
-            return text.lower()
+            return text
         except sr.UnknownValueError:
-            speak("Sorry, I did not understand that.")
-            return None
+            print("Sorry, I did not get that")
+            return ""
         except sr.RequestError:
-            speak("Sorry, my speech service is down.")
-            return None
+            print("Sorry, I did not get that")
+            return ""
 
-def detect_intent(text):
+
+def openai_initial_response(prompt):
     response = openai.ChatCompletion.create(
-        model="gpt-4o",
+        model="gpt-4",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            
-            {"role": "user", "content": text},
-        ]
-
+            {"role": "system", "content": "You are a bunch of agents wearing a trench coat under the name, Journey. Your collective goal is to help users log movies they've watched and provide movie recommendations."},
+            {"role": "system", "content": "Your personal role is of just a manager, aa triage. You are responsible for managing the user requests and delegating them to the right agent. You can only answer using one of 4 words: 'help', 'recommend', 'log', 'exit'."},
+            {"role": "user", "content": prompt}
+        ],
+        max_tokens=200
     )
 
-def movie_recommendation_agent():
-    speak("You have chosen the movie recommendation agent.")
-    # Add your movie recommendation logic here
-    speak("Here are some movie recommendations for you.")
-
-def movie_logging_agent():
-    speak("You have chosen the movie logging agent.")
-    # Add your movie logging logic here
-    speak("Please tell me the movie you want to log.")
+    response_text = response['choices'][0]['message']['content']
+    return response_text 
 
 def main():
-    speak("Hello, I am your AI agent. How can I assist you today?")
     while True:
-        user_input = listen()
-        if user_input:
-            intent = detect_intent(user_input)
-            if intent == "recommend":
-                movie_recommendation_agent()
-            elif intent == "log":
-                movie_logging_agent()
-            elif intent == "exit":
-                speak("Goodbye!")
-                break
-            else:
-                speak("Sorry, I can only help with movie recommendations, logging movies, or exiting.")
+        text = listen()
+        if text == "exit":
+            break
+        response = openai_initial_response(text)
+        speak(response)
 
 if __name__ == "__main__":
     main()
