@@ -456,6 +456,36 @@ Functionality:
 
 ![Journey Chatbot](images/journey-chatbot.png)
 
+# Build Instructions
+The API of the project is built using FastAPI, a modern web framework for building APIs with Python. FastAPI provides a simple and efficient way to create RESTful APIs with automatic interactive documentation. We've also used Poetry for dependency management and Pydantic for data validation.
+
+### Setup
+1. Clone the repository:
+```bash
+git clone  https://github.com/Arpan-206/Ctrl-Shift-Alt-Win-L.git
+```
+2. Change the directory:
+```bash
+cd Ctrl-Shift-Alt-Win-L
+```
+3. Install the dependencies:
+```bash
+poetry install
+```
+4. Run the code (for development):
+```bash
+poetry run fastapi dev main.py
+```
+5. Open the API documentation in your browser:
+```
+http://localhost:8000/docs
+```
+6. You can test the endpoints using the interactive documentation provided by FastAPI.
+
+
+
+
+
 # Frontend
 What better way to travel through time than by immersing yourself in the worlds of the movies you've watched?
 Movies allow us to experience different time periods, settings, and worlds. Whether you're in medieval times, the distant future, or a parallel universe, movies let us journey through time.
