@@ -244,10 +244,10 @@ def main():
     if user_input:
         # Triage
         user_id = "12345" 
-        session = Session()  
-        user_movies = get_user_movie_history(user_id, session)
-        
-        triage_request("check_recommendation", user_id, user_input=user_input, user_movies=user_movies, session=session)
+        with next(db.get_session()) as session:
+            user_movies = get_user_movie_history(user_id, session)
+            
+            triage_request("check_recommendation", user_id, user_input=user_input, user_movies=user_movies, session=session)
 
 if __name__ == "__main__":
     main()
