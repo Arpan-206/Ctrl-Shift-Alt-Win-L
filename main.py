@@ -135,7 +135,7 @@ async def mv_by_userid(
     with next(get_session()) as session:
         movies = get_movies_by_user_id(session, user_id)
         if not movies or len(movies) == 0:
-            return HTTPException(status_code=404, detail="No movies found")
+            return []
         return movies
 
 
