@@ -20,9 +20,9 @@ export default function Header() {
                         <a className="text-[#FFFFFF]" href="/log-film">Log a Film</a>
                         <a className="text-[#FFFFFF]" href="/timeline">My Journey</a>
                         <a className="text-[#FFFFFF]" href="/discovery">Discovery</a></span>
-                    {(isAuthenticated == false || localStorage.getItem("access_token") != null)?
-                        <Button onClick={() => { loginWithRedirect(); }} className="bg-[#F8F6E7] absolute top-[20px] right-[30px] z-5 w-[80px] h-[40px] text-[#000000]">Log In</Button> :
-                        <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} className="bg-[#F8F6E7] absolute top-[20px] right-[30px] z-5 w-[80px] h-[40px] text-[#000000]">Log Out</Button>}
+                    {(localStorage.getItem("username") == null || localStorage.getItem("password") == null)?
+                        <Button onClick={() => { window.location.href = '/login' }} className="bg-[#F8F6E7] absolute top-[20px] right-[30px] z-5 w-[80px] h-[40px] text-[#000000]">Log In</Button> :
+                        <Button onClick={() => { localStorage.clear(); window.location.reload() }} className="bg-[#F8F6E7] absolute top-[20px] right-[30px] z-5 w-[80px] h-[40px] text-[#000000]">Log Out</Button>}
 
                 </header>
             </div>
