@@ -1,0 +1,15 @@
+<script>
+    fetch("https://watermelon-bpwf.onrender.com/movies",
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IndJZDFIU2tLOHdjb1pMZnQtSG9lbyJ9.eyJpc3MiOiJodHRwczovL2hyYnQudXMuYXV0aDAuY29tLyIsInN1YiI6Iks1OWhISkRxN2UwMHg0cDNzNkZCbTBmb2g0TGluMk9DQGNsaWVudHMiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAiLCJpYXQiOjE3MzEyMTEwMjYsImV4cCI6MTczMTI5NzQyNiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoiSzU5aEhKRHE3ZTAweDRwM3M2RkJtMGZvaDRMaW4yT0MifQ.wMy8l_sFG7jLqK_jYTuAlaBgfSTdOjUrRv_Q91eGVhirWxkENVEKvcVoOgfnk9z25ugIDw2f1-K0nO5efcAg-tI0y4LDH3E_XIqeNBzcvLkkEujqUPBgRBfSgJGgMeFURiVSRHhptofk5tBuQmz86ki-YpBrGVspPbqYp4KgXdZdDQduBSbFb5Xcmv3-tkFCnc4KMWIIpekz5fBN1dbTRDDE2LZB3AfCPsOWbdxEgCXumnuisiTmoJeB_sE9iYipWVPginG0Wm9YZV9WWNYu9bAO2hOI2iadg8ALC7yZZHMe3a7M9j604vENfU-zxvkAsh75RoBtS1ewYpPXenHC0g"
+        }
+    }
+    ).then((Response) => {
+        return Response.json();
+    }).then((data) => {
+        console.log(data);
+    })
+</script>

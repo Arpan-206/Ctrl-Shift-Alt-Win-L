@@ -7,16 +7,12 @@ export default async function GetTimeLine()
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Credentials": "true",
-            "Content-Type": "text/plain",
-            "Accept": "application/json"
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Basic ${btoa('abra' + ':' + 'abc')}`
         },
-        auth: {
-            username: "abra",
-            password: "abc"
-        },
-        withCredentials: false,
-    }).then(response => {
-        data =  response.data;
+    }).then(async response => {
+        data =  await response.json();
         console.log(data);
     });
     return data;
