@@ -1,8 +1,8 @@
-# Journey Chatbot
+# Film Odessey
 
 ## Overview
 
-Journey is an AI-powered chatbot designed to process voice input and assist users with movie recommendations, logging movies, or exiting the conversation. The bot processes user commands and utilizes APIs to perform tasks like retrieving movie recommendations, logging movies, and managing user preferences.
+Film Odessey uses Journey an AI-powered chatbot designed to process voice input and assist users with movie recommendations, logging movies, or exiting the conversation. The bot processes user commands and utilizes APIs to perform tasks like retrieving movie recommendations, logging movies, and managing user preferences. It tracks the user preferences and suggests recommendations based on that.
 
 ### Features:
 1. **Speech Input (Speech-to-Text)**: Converts user’s spoken input into text.
