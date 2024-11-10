@@ -10,7 +10,6 @@ import os
 from fastapi_auth0 import Auth0, Auth0User
 
 
-
 load_dotenv()
 
 auth = Auth0(
@@ -36,6 +35,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"]
 )
 
 @app.get("/suggest_movies/{current_param}")
@@ -94,7 +94,7 @@ async def mv_by_userid(
     user: Auth0User = Security(auth.get_user)
 ):
     user_id = user.id
-    with Session(engine) as session:
+    with next(get_session()) as session:
         movies = get_movies_by_user_id(session, user_id)
         if not movies or len(movies) == 0:
             return HTTPException(status_code=404, detail="No movies found")
