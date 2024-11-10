@@ -4,16 +4,18 @@ from db import *
 from helpers import *
 from schema import *
 from assistant import *
-import requests
 from dotenv import load_dotenv
-import os
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 import secrets
 
 load_dotenv()
 
 
-app = FastAPI()
+app = FastAPI(
+    title="Movie Recommendation API",
+    description="API for movie recommendation and logging",
+    version="0.1"
+)
 
 security = HTTPBasic()
 
