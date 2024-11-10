@@ -62,7 +62,7 @@ def get_current_username(
         
     return credentials.username
 
-@app.get("/suggest_titles/{current_param}")
+@app.get("/suggest_titles/")
 async def suggest_titles(current_param: str):
     return get_similar_titles_from_openai(current_param)
 
