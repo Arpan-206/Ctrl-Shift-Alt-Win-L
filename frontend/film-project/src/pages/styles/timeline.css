@@ -3,7 +3,7 @@
 
 
 html, body {
-    min-height: 100vh;
+    background-color: #242424;
     overflow-y: scroll; /* Ensure scrolling is enabled */
 }
 
@@ -11,15 +11,12 @@ body {
     background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
     color: white;
     height: auto;
+    background-color: #242424;
 }
 
 /* Starry Background */
-.container {
-    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-    overflow: hidden;
-    transform-style: preserve-3d;
-    perspective: 1500px;
-    z-index: 0;
+.container{
+    background-color: #242424;
 }
 
 .stars {

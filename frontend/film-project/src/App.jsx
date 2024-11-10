@@ -4,6 +4,7 @@ import Discovery from "./pages/discovery";
 import HomePage from "./pages/home";
 import FilmLogger from "./pages/FilmLogger";
 import LoginPage from "./pages/login";
+import AboutPage from "./pages/About";
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
             <Route path="/discovery" element={<Discovery/>} />
             <Route path="/log-film" element={<FilmLogger/>} />
             <Route path="/login" element={<LoginPage/>} />
+            <Route path="/about" element={<AboutPage className="w-[100vw]"></AboutPage>}/>
           </Routes>
       </BrowserRouter>
   )

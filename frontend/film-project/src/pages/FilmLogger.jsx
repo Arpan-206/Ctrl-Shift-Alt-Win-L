@@ -24,9 +24,9 @@ export default function FilmLogger()
         });
     }, [titleField.value]);
     return(
-        <div>
+        <div className="absolute top-[0px]">
 
-            <div className="z-10"></div>
+            <div className="z-10 absolute top-[0px]"></div>
             <Header className="absolute top-[0px]"/>
             <div className="w-[100vw] h-[90vh] mt-[50px] flex justify-center items-center">
             <div className="relative w-[80vw] h-[80vh] inline-block rounded-[30px] shadow-lg bg-[#202020]">

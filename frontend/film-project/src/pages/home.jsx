@@ -7,16 +7,16 @@ function HomePage()
         
     return(
         <>
-            <div className="w-[100vw] h-[100vh]">
-                <Header></Header>
+            <div className="w-[100vw] h-[100vh] absolute top-[0px]">
+                <Header className="absolute top-[0px]"></Header>
                 <div className="stars"></div>
-                <div className="absolute w-[100%] text-center flex justify-center">
+                <div className="absolute w-[100%] mt-[150px] text-center flex justify-center">
                     <div className="h-[100%] w-[80%] ">
                         <h1>Film Odyssey</h1>
-                        <p className="info">Film Journey is your gateway to exploring the cinematic universe across time. Log the films you've watched, discover new titles, and trace your viewing history on a personalized timeline. Whether you're diving into classic films, modern blockbusters, or hidden gems, Film Journey helps you reflect on your adventures through the world of cinema and uncover new destinations to explore.</p>
+                        <p className="info">Film Odyssey is your gateway to exploring the cinematic universe across time. Log the films you've watched, discover new titles, and trace your viewing history on a personalized timeline. Whether you're diving into classic films, modern blockbusters, or hidden gems, Film Journey helps you reflect on your adventures through the world of cinema and uncover new destinations to explore.</p>
                         <div className="btns">
-                            <a href="#">Discover Films</a>
-                            <a href="#">Log a film</a>
+                            <a href="/timeline">Timeline</a>
+                            <a href="/discovery">Discovery</a>
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ export default function Timeline()
     
     return (
         <>
-            <div className="absolute top-[0px] w-auto text-center">
+            <div className="bg-[#242424] absolute top-[0px] w-auto text-center">
             
                 <div className="stars"></div>
         {/*<!-- Title and Caption -->*/}

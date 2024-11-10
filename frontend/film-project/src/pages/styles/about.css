@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Limelight&family=Roboto:wght@100;300;400;500;700&display=swap');
+
+
+* {
+    font-family: "Limelight", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 140vh;
+    overflow-y: scroll;
+}
+
+body {
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    color: white;
+   
+}
+
+/* Starry Background */
+.container {
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    overflow: visible;
+    transform-style: preserve-3d;
+    perspective: 1500px;
+    z-index: 0;
+    width: 100vw;
+    
+}
+
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 50%;
+    animation: twinkle 4s infinite;
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+
+/* About Section with Glassmorphism Effect */
+.about-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 50px 50px;
+    margin-top: 80px;
+}
+
+.glass-box {
+    
+    
+    padding: 10px;
+    background: rgba(255, 255, 255, .1);
+    border-radius: 15px;
+    max-width: 900px;
+    height: 800px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    color: white;
+    backdrop-filter: blur(1.5px);
+    border-bottom: 2px solid rgba(255, 255, 255, .2);
+}
+
+    .glass-box h1 {
+        padding: 30px;
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .glass-box p {
+        font-family: Arial;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+
+.glass-box:hover::before {
+    left: 100%;
+}
+
+
+.features-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+/* Feature Item Styling */
+.feature-item {
+    flex-basis: 45%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    .feature-item i {
+        font-size: 2rem;
+        color: #ffee8c;
+        margin-bottom: 10px;
+    }
+
+    .feature-item h3 {
+        font-size: 1.5rem;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .feature-item p {
+        font-size: 1.1rem;
+        color: #cccccc;
+        line-height: 1.5;
+    }

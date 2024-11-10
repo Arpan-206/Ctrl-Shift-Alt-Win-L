@@ -16,7 +16,7 @@ export default function Header() {
                     <span class="justify-between flex block-inline text-[#FFFFFF] w-[600px] mr-[80px]">
 
                         <a className="text-[#FFFFFF]" href="/">Home</a>
-                        <a className="text-[#FFFFFF]" href="#">About</a>
+                        <a className="text-[#FFFFFF]" href="/about">About</a>
                         <a className="text-[#FFFFFF]" href="/log-film">Log a Film</a>
                         <a className="text-[#FFFFFF]" href="/timeline">My Journey</a>
                         <a className="text-[#FFFFFF]" href="/discovery">Discovery</a></span>
