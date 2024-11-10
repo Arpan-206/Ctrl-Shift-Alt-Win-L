@@ -131,7 +131,7 @@ get_session: A generator function that provides a database session. The session 
 
 #### helpers.py
 # Movie Management with FastAPI and SQLModel
-
+![Journey Chatbot](helper.png)
 ## Overview
 
 This section of the code provides functionality for managing movies within a database. It includes features such as adding new movies, retrieving movies by user ID, updating movie details, and fetching movie information from the OMDb API using IMDb IDs. The application uses FastAPI, SQLModel, and requests to interact with a database and external API.
@@ -177,7 +177,7 @@ get_movie_title_api: This function fetches the movie title from the OMDb API bas
 test_functions: A helper function to test the functionality of all the above functions. It creates a test movie from IMDb, retrieves it by ID, title, and generates the user's movie timeline.
 
 #### main.py
-
+![Journey Chatbot](images/main.png)
 Features
 
     User Registration: Users can register with a unique user ID.
