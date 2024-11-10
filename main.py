@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends, Security
+from fastapi.middleware.cors import CORSMiddleware
 from db import *
 from helpers import *
 from schema import *
@@ -7,7 +8,8 @@ import requests
 from dotenv import load_dotenv
 import os
 from fastapi_auth0 import Auth0, Auth0User
-import datetime
+
+
 
 load_dotenv()
 
@@ -24,6 +26,17 @@ auth = Auth0(
 )
 app = FastAPI()
 
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/suggest_movies/{current_param}")
 async def suggest_movies(current_param: str):
