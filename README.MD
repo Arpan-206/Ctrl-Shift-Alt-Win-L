@@ -244,3 +244,5 @@ Represents a user in the system.
 Fields:
     user_id (str): The unique identifier for the user (primary key).
     password (str): The user's password, stored securely.
+
+![Journey Chatbot](images/journey-chatbot.png)
