@@ -5,7 +5,7 @@ import {Modal, ModalContent, ModalHeader, Input, ModalBody, DateInput, Textarea,
 function LoginPage()
 {
     return(
-        <div>
+        <div className="absolute top-[0px]">
             {localStorage.getItem("username") && localStorage.getItem("password") ? window.location.href = "/" : null}
 
             <div className="z-10"></div>
@@ -15,10 +15,9 @@ function LoginPage()
                     <div className="Header w-[100%] ml-[50px] mt-[50px] mb-[50px]">
                         <h1 className="font-semibold text-white text-[30px]">Login</h1>
                     </div>
-                    <img src="https://placehold.co/2000x3000" className="absolute ml-[50px] w-[200px] rounded-[15px]"></img>
-                    <div className="InputFields ml-[290px] mr-[20px]">
+                    <div className="InputFields mx-[10%]">
                         <Input className="mb-[10px]" placeholder="Username"></Input>
-                        <Input className="mb-[10px]" placeholder="Password"></Input>
+                        <Input type="password" className="mb-[10px]" placeholder="Password"></Input>
                     </div>
                     <div className="absolute bottom-[20px] right-[50px]">
                         <Button onClick={()=>{LoginSubmit()}}className="">Submit</Button>
