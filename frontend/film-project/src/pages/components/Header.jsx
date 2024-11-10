@@ -18,7 +18,7 @@ export default function Header() {
                         <a className="text-[#FFFFFF]" href="/">Home</a>
                         <a className="text-[#FFFFFF]" href="#">About</a>
                         <a className="text-[#FFFFFF]" href="/myfilms">My Films</a>
-                        <a className="text-[#FFFFFF]" href="#">Log a Film</a>
+                        <a className="text-[#FFFFFF]" href="/log-film">Log a Film</a>
                         <a className="text-[#FFFFFF]" href="/timeline">My Journey</a>
                         <a className="text-[#FFFFFF]" href="/discovery">Discover</a></span>
                     {(isAuthenticated == false || localStorage.getItem("access_token") != null)?

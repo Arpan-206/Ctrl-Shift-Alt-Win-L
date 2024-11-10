@@ -3,6 +3,7 @@ import Test from "./pages/test"
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Discovery from "./pages/discovery";
 import HomePage from "./pages/home";
+import FilmLogger from "./pages/FilmLogger";
 
 function App() {
   
@@ -13,7 +14,7 @@ function App() {
             <Route path="/" element={<HomePage/>} />
             <Route path="/timeline" element={<Timeline />} />
             <Route path="/discovery" element={<Discovery/>} />
-            
+            <Route path="/log-film" element={<FilmLogger/>} />
           </Routes>
       </BrowserRouter>
   )
