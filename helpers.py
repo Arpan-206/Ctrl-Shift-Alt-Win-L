@@ -108,14 +108,10 @@ def create_movie_from_imdb_id(imdb_id: str, user_id: str, session: Session, date
 
 
 def timeline_generator(session: Session, user_id: str):
-    movies = (
-        session.exec(select(Movie).where(Movie.user_id == user_id))
-        .all()
-    )
+    movies = get_movies_by_user_id(session, user_id)
     # Sort the movies by date_watched
     movies.sort(key=lambda x: x.date_watched)
-    for movie in movies:
-        yield movie
+    return movies
     
 
 

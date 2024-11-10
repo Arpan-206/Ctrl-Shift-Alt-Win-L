@@ -133,8 +133,8 @@ async def mv_by_userid(
 ):
     user_id = get_current_username(credentials)
     with next(get_session()) as session:
-        movies = get_movies_by_user_id(session, user_id)
-        if not movies or len(movies) == 0:
+        movies = timeline_generator(session, user_id)
+        if not movies or len(tuple(movies)) == 0:
             return []
         return movies
 
