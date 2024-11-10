@@ -62,20 +62,9 @@ def get_current_username(
         
     return credentials.username
 
-@app.get("/suggest_movies/{current_param}")
-async def suggest_movies(current_param: str):
-    url = (
-        f"http://www.omdbapi.com/?apikey={os.getenv('OMDB_API_KEY')}&s={current_param}"
-    )
-    response = requests.get(url)
-    # return a list of all titles
-    response_json = response.json()
-    if "Search" not in response_json:
-        return HTTPException(status_code=404, detail="No movies found")
-    lis = []
-    for movie in response_json["Search"]:
-        lis.append(movie["Title"])
-    return lis
+@app.get("/suggest_titles/{current_param}")
+async def suggest_titles(current_param: str):
+    return get_similar_titles_from_openai(current_param)
 
 # Register a new user
 @app.post("/register/")

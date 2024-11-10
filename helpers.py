@@ -4,6 +4,9 @@ import os
 from dotenv import load_dotenv
 import requests
 
+import openai
+import json
+
 load_dotenv()
 
 
@@ -113,7 +116,31 @@ def timeline_generator(session: Session, user_id: str):
     movies.sort(key=lambda x: x.date_watched)
     return movies
     
+def get_similar_titles_from_openai(title):
+    prompt = f"""
+    You are a movie recommendation assistant. Given the following movie details, provide a list of 5 movie titles that are most similar.
+    Ignore case and punctuation and search for ones with substrings matching.
+    Movie Details:
+    Title: {title}
+    
+    Return the top 5 most similar movie titles in a JSON list.
+    """
 
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a movie recommendation assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=200
+        )
+
+        response_text = response['choices'][0]['message']['content']
+        return json.loads(response_text)
+    except Exception as e:
+        print(f"Error querying OpenAI: {e}")
+        return None
 
 def get_movie_by_title(session: Session, title: str):
     movie = session.exec(select(Movie).where(Movie.title == title)).first()
