@@ -2,6 +2,7 @@ import Header from "./components/Header"
 import {Modal, ModalContent, ModalHeader, Input, ModalBody, DateInput, Textarea, Button} from "@nextui-org/react"
 import {useRef, useState, useEffect} from "react"
 import SubmitItems from "../API/FilmLogger"
+import "./styles/home.css";
 export default function FilmLogger()
 {
     useEffect(() => {createStars();}, [])
@@ -9,7 +10,7 @@ export default function FilmLogger()
         <div>
 
             <div className="z-10"></div>
-            <Header className="relative"/>
+            <Header className="absolute top-[0px]"/>
             <div className="w-[100vw] h-[90vh] mt-[50px] flex justify-center items-center">
             <div className="relative w-[80vw] h-[80vh] inline-block rounded-[30px] shadow-lg bg-[#202020]">
                     <div className="Header w-[100%] ml-[50px] mt-[50px] mb-[50px]">

@@ -2,9 +2,10 @@ import Header from "./components/Header";
 import {Card, CardBody, Spacer, Image} from "@nextui-org/react"
 import {useState, useEffect} from "react"
 import GetDiscoveryData from "../API/Discovery";
+import "./styles/glass.css";
 export default function Discovery()
 {
-    const [data, setData] = useState(["data", "setData"]);
+    const [data, setData] = useState(null);
     useEffect(() => {
         GetDiscoveryData().then(respone=>{
             setData(respone);
@@ -18,10 +19,13 @@ export default function Discovery()
             <Header></Header>
             <div className="block">
                 <h1 className = "text-[50px] w-[100vw]">Discovery</h1>
-                {data!=null && data.map((item, index) => {
+                {data==null ? <div className="">
+                    <h3 className="text-center text-[#505050]">Loading</h3>
+                </div> :
+                (data!=null && data.map((item, index) => {
                     return(
                         <div>
-                        <Card className="relative w-[80%] left-[10%] mb-[40px] opacity-10 bg-white">
+                        <Card className="glass relative w-[80%] left-[10%] mb-[40px] opacity-10 bg-white">
                             <CardBody className="h-[300px]">
                                 <h3 className="text-[50px] text-center">{item.Title}</h3>
                                 <span>
@@ -35,7 +39,7 @@ export default function Discovery()
                         <Spacer></Spacer>
                         </div>
                     )
-                })}
+                }))}
                 
                 </div>
             </div>
