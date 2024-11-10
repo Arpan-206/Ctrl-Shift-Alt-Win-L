@@ -499,7 +499,7 @@ This is the intial vision we aimed to create.
 ![Journey Chatbot](images/p2.png)
 
 ## Final Website Model
-This is the intial vision we aimed to create.
+This is the final product.
 ![Journey Chatbot](images/finallogin.jpg)
 ![Journey Chatbot](images/finalhome.jpg)
 ![Journey Chatbot](images/finalabout.jpg)
