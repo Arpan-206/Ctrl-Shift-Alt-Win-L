@@ -16,3 +16,6 @@ class Movie(SQLModel, table=True):
     rating: int = Field()
     user_id: str = Field(max_length=100)
     
+class User(SQLModel, table=True):
+    user_id: str = Field(primary_key=True, max_length=100)
+    password: str = Field(max_length=100)

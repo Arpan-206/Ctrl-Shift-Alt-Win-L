@@ -24,6 +24,19 @@ class MovieCreate(BaseModel):
     rating: int 
     user_id: str | None = None
 
+class UserBase(BaseModel):
+    user_id: str
+    password: str
+
+class UserCreate(UserBase):
+    pass
+
+class UserUpdate(UserBase):
+    pass
+
+class User(UserBase):
+    class Config:
+        orm_mode = True
 class MovieB(MovieBase):
     id: int | None = None
 
