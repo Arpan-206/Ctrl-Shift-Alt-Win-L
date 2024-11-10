@@ -16,13 +16,15 @@ export default async function SubmitItems(title, dateWatched, review, rating)
 }
 export async function GetItems(searchValue)
 {
+    var data = null;
     var request = await axios.get("https://watermelon-bpwf.onrender.com/suggest_titles/?current_param=" + searchValue,
     {
     }
     
 ).then(response => {
     console.log(response);
-    return response;
+    data = response;
 });
-    
+    return data;
 }
+

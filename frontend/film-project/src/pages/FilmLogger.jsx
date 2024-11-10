@@ -6,18 +6,23 @@ import { GetItems } from "../API/FilmLogger"
 import "./styles/home.css";
 export default function FilmLogger()
 {
-    
+    let search = "";
+    const [searchResult, setSearchResult] = useState([]);
+    let titleField = useRef(null);
+    let dateField = useRef(null);
+    let reviewField = useRef(null);
+
     useEffect(() => 
         {
             createStars();
 
         }, [])
     useEffect(() => {
-        GetItems().then(respone=>{
+        console.log(search);
+        GetItems(search).then(async respone=>{
+            setSearchResult(await respone);
         });
-    }, [search]);
-    const[search, setSearchParam] = useState("");
-    const [searchResult, setSearchResult] = useState([]);
+    }, [titleField.value]);
     return(
         <div>
 
@@ -30,19 +35,19 @@ export default function FilmLogger()
                     </div>
                     <img src="https://placehold.co/2000x3000" className="absolute ml-[50px] w-[200px] rounded-[15px]"></img>
                     <div className="InputFields ml-[290px] mr-[20px]">
-                        <Autocomplete className="mb-[10px]"placeholder="Film Name" onChange={()=>{setSearchParam(target.value)}}>
-                            {searchResult.map((item, index) => {
-                                return(
-                                    <AutocompleteItem key={index}>{item[0]}</AutocompleteItem>
-                                )
-                            })}
-                        </Autocomplete>
-                        <DateInput className="mb-[10px]"placeholder="Watch Date"></DateInput>
-                        <Textarea className="min-h-[300px]" placeholder="Write a review!"></Textarea>
+                        <Input ref={titleField} className="mb-[10px]"placeholder="Film Name">
+                        </Input>
+                        <Button className="relative mr-[50px]" onClick={()=>{GetItems(titleField.current.value).then(async (response)=>{
+                            console.log(response);
+                            setSearchResult(await response.data[0]);
+                            titleField.current.value = await response.data[0];
+                        })}}>Search</Button>
+                        <Input ref={dateField} className="mb-[10px]"placeholder="Watch Date"></Input>
+                        <Textarea ref={reviewField} className="min-h-[300px]" placeholder="Write a review!"></Textarea>
                     </div>
                     <div className="absolute bottom-[20px] right-[50px]">
-                        <Button className="mr-[20px]">Cancel</Button>
-                        <Button onClick={()=>{SubmitItems()}}className="">Submit</Button>
+                        <Button className="mr-[20px]" onClick={()=>{window.open("/")}}>Cancel</Button>
+                        <Button onClick={()=>{console.log(dateField.current.value); SubmitItems(titleField.current.value, dateField.current.value, reviewField.current.value, 0)}}className="">Submit</Button>
                     </div>
             </div>
         </div>
